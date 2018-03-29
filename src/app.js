@@ -1,28 +1,17 @@
 'use strict';
 
-import ServiceController from './js/services/serviceController';
-import DataModel from './js/models/dataModel';
-
-import Constants from './js/services/constants';
+import AppModel from './js/models/AppModel';
+import AppView from './js/view/AppView';
+import AppController from './js/controllers/AppController';
 
 require("./css/app.scss");
 
-console.log('App is running!');
-
 class App {
 	constructor() {
-		ServiceController.loadData(Constants.DATA_URL, this.dataLoaded);
+		this.appModel = new AppModel();
+		this.appView = new AppView(this.appModel);
+		this.appController = new AppController(this.appModel, this.appView);
 	};
-
-	dataLoaded(data) {
-		var _data = ServiceController.parceData(data);
-
-		this.dataModel = new DataModel(_data);
-	}
-
-	// var element = document.createElement('div');
-	//
-	// element.innerHTML = _.join(['Hello', 'webpack'], ' ');
 }
 
 export default new App;

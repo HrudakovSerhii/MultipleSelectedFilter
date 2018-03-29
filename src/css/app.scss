@@ -3,3 +3,44 @@ body {
 	display: inline-block;
 	font-size: 14px;
 }
+
+.filter-list_container {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+
+	.container_controllers {
+		.saveFiltersSchemeBtn,
+		.loadFiltersSchemeBtn,
+		.filterInput {
+			display: inline-block;
+		}
+	}
+
+	ul {
+		list-style: none;
+		width: 300px;
+		height: 500px;
+		background-color: grey;
+		text-align: left;
+		overflow: scroll;
+
+		li {
+			padding: 10px;
+		}
+	}
+}
+
+.item_select-checkbox {
+	display: inline-block;
+	background-color: red;
+}
+
+.item_data-label {
+	display: inline-block;
+	background-color: ghostwhite;
+	font-size: 14px;
+	padding-left: 10px;
+}
+
