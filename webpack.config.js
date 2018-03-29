@@ -12,7 +12,8 @@ const PATHS = {
 	DIST: resolve('dist'),
 	SRC : resolve('src'),
 	JS  : resolve('src/js'),
-	CSS : resolve('src/css')
+	CSS : resolve('src/css'),
+	ASSETS: resolve('assets')
 };
 
 module.exports = {
@@ -23,7 +24,7 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	devServer: {
-		contentBase: PATHS.SRC,
+		contentBase: PATHS.ASSETS,
 		hot        : true
 	},
 	resolve: {
