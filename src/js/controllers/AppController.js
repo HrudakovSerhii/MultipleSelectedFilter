@@ -13,7 +13,26 @@ class AppController {
 		this.view.filterInput.oninput = (e) => this.inputFilterChange(e);
 		this.view.saveFiltersSchemeBtn.onclick = () => this.saveFilterScheme();
 
-		ServiceController.loadData(Constants.data.DATA_URL, (dataArray) => this.model.initListModels(dataArray));
+		ServiceController.loadData(Constants.data.DATA_URL, (dataArray) => this.initFilterList(dataArray));
+	}
+
+	initFilterList(listData) {
+		let viewCollection = [];
+		let filteredViewCollection = [];
+
+		for (let i = 0; i < listData.length; i++) {
+			let model = this.model.initItemModel(listData[i], i);
+			
+			if (!this.model.checkIfModelInCollection(model, viewCollection)) {
+				let view = this.view.createViewFromModel(model);
+
+				viewCollection.push(view);
+				filteredViewCollection.push(view);
+			}
+		}
+
+		this.model.setViewCollection(viewCollection);
+		this.model.setFilteredViewCollection(filteredViewCollection)
 	}
 
 	inputFilterChange(e) {
@@ -21,18 +40,18 @@ class AppController {
 	}
 
 	runFilter(searchText) {
-		let updatedItemsList;
-		let selectedItemsList = this.model.getSelectedList();
-		let unselectedItemsList = this.model.getUnselectedList();
+		let updatedViewCollection;
+		let selectedItemsList = this.model.getSelectedViewCollection();
+		let unselectedItemsList = this.model.getUnselectedViewCollection();
 
 		if (searchText.length) {
-			updatedItemsList = this.searchTextInList(unselectedItemsList, searchText);
-			updatedItemsList = selectedItemsList.concat(updatedItemsList);
+			updatedViewCollection = this.searchTextInList(unselectedItemsList, searchText);
+			updatedViewCollection = selectedItemsList.concat(updatedViewCollection);
 		} else {
-			updatedItemsList = selectedItemsList.concat(unselectedItemsList);
+			updatedViewCollection = selectedItemsList.concat(unselectedItemsList);
 		}
 
-		this.model.updateItemsList(updatedItemsList);
+		this.model.setFilteredViewCollection(updatedViewCollection);
 	}
 
 	searchTextInList(list, searchText) {
@@ -40,7 +59,7 @@ class AppController {
 		var alikeItemsList = [];
 
 		for(let i = 0; i < list.length; i++) {
-			let modelData = list[i].getData();
+			let modelData = list[i].elementModel.getData();
 
 			if(modelData === searchText) {
 				sortedItemsList.push(list[i]);
@@ -52,16 +71,8 @@ class AppController {
 		return sortedItemsList.concat(alikeItemsList);
 	}
 
-	loadFilterScheme() {
-		ServiceController.loadDataFromFile((filterScheme) => this.filterSchemeLoaded(filterScheme));
-	}
-
-	filterSchemeLoaded(filterScheme) {
-	
-	}
-
 	saveFilterScheme() {
-		var selectedCollection = this.model.getSelectedDataCollection();
+		var selectedCollection = this.model.getSelectedViewCollection();
 		var filterScheme = selectedCollection.map((model) => { return model.getData() }).split(" ");
 
 		ServiceController.saveDataInFile(filterScheme);
