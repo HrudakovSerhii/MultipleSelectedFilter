@@ -6,13 +6,17 @@
 	</head>
 	<body>
 		<div class="app">
-			<div class="filter-list_container">
-				<div class="container_controllers">
-					<button id="saveFiltersSchemeBtn">Save Selected Scheme</button>
-					<button id="loadFiltersSchemeBtn">Load Selected Scheme</button>
-					<input id="filterInput" placeholder="Search item by name">
+			<div class="product-filter_container">
+				<label class="filter_container-label">Productgroep</label>
+				<div class="filter_container-column">
+					<div class="filter_search">
+						<input class="search-input_field" id="filterInput" placeholder="Zoek op ...">
+						<span class="search-input_field-icon"></span>
+					</div>
+
+					<ul class="filter_list" id="filterList"></ul>
+					<button class="filter_save-btn" id="saveFiltersSchemeBtn">Toepassen</button>
 				</div>
-				<ul id="filterList"></ul>
 			</div>
 		</div>
 	</body>

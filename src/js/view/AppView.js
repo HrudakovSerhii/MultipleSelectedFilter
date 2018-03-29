@@ -4,7 +4,7 @@ import Constants from './../services/constants';
 class AppView {
 	constructor(listModel) {
 		this.listModel = listModel;
-		this.loadFiltersSchemeBtn = document.getElementById('loadFiltersSchemeBtn');
+
 		this.saveFiltersSchemeBtn = document.getElementById('saveFiltersSchemeBtn');
 		this.filterList = document.getElementById('filterList');
 		this.filterInput = document.getElementById('filterInput');

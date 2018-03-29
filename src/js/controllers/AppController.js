@@ -11,7 +11,6 @@ class AppController {
 
 	init() {
 		this.view.filterInput.oninput = (e) => this.inputFilterChange(e);
-		this.view.loadFiltersSchemeBtn.onclick = () => this.loadFilterScheme();
 		this.view.saveFiltersSchemeBtn.onclick = () => this.saveFilterScheme();
 
 		ServiceController.loadData(Constants.data.DATA_URL, (dataArray) => this.model.initListModels(dataArray));
