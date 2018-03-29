@@ -28,28 +28,23 @@ class AppModel {
 	}
 
 	getUnselectedViewCollection() {
-		return this.viewCollection.filter((item) => {
-			return !item.elementModel.getSelectedState();
-		});
+		return this.viewCollection.filter(item => !item.elementModel.getSelectedState());
 	}
 
 	getSelectedViewCollection() {
-		return this.viewCollection.filter((item) => {
-			return item.elementModel.getSelectedState();
-		});
+		return this.viewCollection.filter(item => item.elementModel.getSelectedState());
 	}
 
 	initItemModel(data, index) {
 		let model = new FilterListItemModel(index);
+		
 		model.setData(data);
 
 		return model;
 	}
 
 	checkIfModelInCollection(newModel, modelCollection) {
-		var result = modelCollection.findIndex((model) => {
-			return newModel == model;
-		});
+		let result = modelCollection.findIndex(model => newModel == model);
 
 		return result >= 0;
 	}

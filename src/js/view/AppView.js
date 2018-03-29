@@ -12,6 +12,7 @@ class AppView {
 		document.addEventListener(Constants.events.DATA_COLLECTION_UPDATE, () => {
 			this.clearListView();
 			this.render();
+			this.updateScrollPosition();
 		});
 	}
 
@@ -32,6 +33,10 @@ class AppView {
 
 			this.filterList.append(view.getElement());
 		}
+	}
+
+	updateScrollPosition() {
+		this.filterList.scrollTo(0,0);
 	}
 
 	createViewFromModel(model) {

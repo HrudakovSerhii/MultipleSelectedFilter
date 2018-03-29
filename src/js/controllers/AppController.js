@@ -13,7 +13,7 @@ class AppController {
 		this.view.filterInput.oninput = (e) => this.inputFilterChange(e);
 		this.view.saveFiltersSchemeBtn.onclick = () => this.saveFilterScheme();
 
-		ServiceController.loadData(Constants.data.DATA_URL, (dataArray) => this.initFilterList(dataArray));
+		ServiceController.loadData(Constants.urls.DATA_URL, (dataArray) => this.initFilterList(dataArray));
 	}
 
 	initFilterList(listData) {
@@ -32,7 +32,7 @@ class AppController {
 		}
 
 		this.model.setViewCollection(viewCollection);
-		this.model.setFilteredViewCollection(filteredViewCollection)
+		this.model.setFilteredViewCollection(filteredViewCollection);
 	}
 
 	inputFilterChange(e) {
@@ -72,8 +72,8 @@ class AppController {
 	}
 
 	saveFilterScheme() {
-		var selectedCollection = this.model.getSelectedViewCollection();
-		var filterScheme = selectedCollection.map((model) => { return model.getData() }).split(" ");
+		let selectedCollection = this.model.getSelectedViewCollection();
+		let filterScheme = selectedCollection.map(view => view.elementModel.getData());
 
 		ServiceController.saveDataInFile(filterScheme);
 	}

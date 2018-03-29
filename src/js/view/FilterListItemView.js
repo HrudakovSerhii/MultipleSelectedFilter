@@ -1,10 +1,12 @@
 
 class FilterListItemView {
 	constructor(elModel) {
+		this.elementModel = elModel;
+
 		this.element = document.createElement('li');
 		this.element.id = elModel.getID();
 		this.element.className = "list_view-item";
-		this.elementModel = elModel;
+
 		this.dataLabel = document.createElement('label');
 		this.checkmark = document.createElement('span');
 
