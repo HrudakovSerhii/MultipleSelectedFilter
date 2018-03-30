@@ -17,7 +17,7 @@ class AppView {
 	}
 
 	clearListView() {
-		var listItemsLength = this.filterList.children.length;
+		let listItemsLength = this.filterList.children.length;
 
 		for(let i = 0; i < listItemsLength; i += 1) {
 			let id = this.filterList.lastChild.id;

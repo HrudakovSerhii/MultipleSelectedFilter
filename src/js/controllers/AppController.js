@@ -55,8 +55,8 @@ class AppController {
 	}
 
 	searchTextInList(list, searchText) {
-		var sortedItemsList = [];
-		var alikeItemsList = [];
+		let sortedItemsList = [];
+		let alikeItemsList = [];
 
 		for(let i = 0; i < list.length; i++) {
 			let modelData = list[i].elementModel.getData();
