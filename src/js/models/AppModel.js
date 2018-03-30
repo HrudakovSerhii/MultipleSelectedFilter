@@ -1,66 +1,50 @@
-import FilterListItemModel from "./FilterListItemModel";
-
 import Constants from './../services/constants';
+import FilterListItemModel from "./FilterListItemModel";
 
 class AppModel {
 	constructor() {
-		this.modelCollection = [];
-		this.filteredModelCollection = [];
+		this.viewCollection = [];
+		this.filteredViewCollection = [];
 
 		this.collectionUpdated = new Event(Constants.events.DATA_COLLECTION_UPDATE);
 	}
 
-	initListModels(listData) {
-		for (let i = 0; i < listData.length; i++) {
-			let model = this.initListItemModel(listData[i], i);
+	setViewCollection(viewCollection) {
+		this.viewCollection = viewCollection;
+	}
 
-			if (!this.checkIfModelInCollection(model)) {
-				this.modelCollection.push(model);
-				this.filteredModelCollection.push(model);
-			}
-		}
+	setFilteredViewCollection(filteredViewCollection) {
+		this.filteredViewCollection = filteredViewCollection;
 
 		document.dispatchEvent(this.collectionUpdated);
 	}
 
-	initListItemModel(data, index) {
-		var itemModel = new FilterListItemModel(index);
-
-		itemModel.setData(data);
-
-		return itemModel;
+	getViewCollectionLength() {
+		return this.filteredViewCollection.length;
 	}
 
-	updateItemsList(modelCollection) {
-		this.filteredModelCollection = modelCollection;
-
-		document.dispatchEvent(this.collectionUpdated);
+	getItemViewByIndex(index) {
+		return this.filteredViewCollection[index];
 	}
 
-	getItemsListLength() {
-		return this.filteredModelCollection.length;
+	getUnselectedViewCollection() {
+		return this.viewCollection.filter(item => !item.elementModel.getSelectedState());
 	}
 
-	getItemModelByIndex(index) {
-		return this.filteredModelCollection[index];
+	getSelectedViewCollection() {
+		return this.viewCollection.filter(item => item.elementModel.getSelectedState());
 	}
 
-	getUnselectedList() {
-		return this.modelCollection.filter((item) => {
-			return !item.getSelectedState();
-		});
+	initItemModel(data, index) {
+		let model = new FilterListItemModel(index);
+		
+		model.setData(data);
+
+		return model;
 	}
 
-	getSelectedList() {
-		return this.modelCollection.filter((item) => {
-			return item.getSelectedState();
-		});
-	}
-
-	checkIfModelInCollection(newModel) {
-		var result = this.modelCollection.findIndex((model) => {
-			return newModel == model;
-		});
+	checkIfModelInCollection(newModel, modelCollection) {
+		let result = modelCollection.findIndex(model => newModel == model);
 
 		return result >= 0;
 	}

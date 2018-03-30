@@ -1,40 +1,43 @@
 
 class ServiceController {
 	loadData(url, callBack) {
-		fetch(url)
-			.then(response => this.checkStatus(response))
-			.then(responseObj => this.parseJSONData(responseObj))
-			.then((parsedArray) => {
-					console.log('Request succeeded with JSON response');
-					callBack(parsedArray);
-				}).catch((error) => {
-					console.log('Request failed', error);
-					throw new Error(error);
-				});
-	}
+		let xObject = new XMLHttpRequest();
 
-	checkStatus(response) {
-		if (response.status >= 200 && response.status < 300) {
-			return response.json();
-		} else {
-			var error = new Error(response.statusText);
+		xObject.overrideMimeType("application/json");
+		xObject.open('GET', url, true);
+		xObject.onreadystatechange = () => {
+			if (xObject.readyState == 4 && xObject.status == "200") {
+				let data = this.parseJSONData(xObject.responseText);
 
-			error.response = response;
+				callBack(data);
+			}
+		};
 
-			throw error
+		try {
+			xObject.send(null);
+		} catch(error){
+			throw new Error(error);
 		}
 	}
 
 	parseJSONData(dataObj) {
-		return Object.keys(dataObj).map(key => dataObj[key])[0];
-	}
-
-	loadDataFromFile() {
-	
+		let parsedData = JSON.parse(dataObj);
+		return Object.keys(parsedData).map(key => parsedData[key])[0];
 	}
 
 	saveDataInFile(data) {
-	
+		let jsonData = JSON.stringify(data, null, '\t');
+
+		this.download(jsonData, 'default.txt', 'text/plain');
+	}
+
+	download(content, fileName, contentType) {
+		let a = document.createElement("a");
+		let file = new Blob([content], {type: contentType});
+
+		a.href = URL.createObjectURL(file);
+		a.download = fileName;
+		a.click();
 	}
 }
 

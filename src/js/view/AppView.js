@@ -1,10 +1,10 @@
-import FilterListItemView from "./FilterListItemView";
 import Constants from './../services/constants';
+import FilterListItemView from "./FilterListItemView";
 
 class AppView {
 	constructor(listModel) {
 		this.listModel = listModel;
-		this.loadFiltersSchemeBtn = document.getElementById('loadFiltersSchemeBtn');
+
 		this.saveFiltersSchemeBtn = document.getElementById('saveFiltersSchemeBtn');
 		this.filterList = document.getElementById('filterList');
 		this.filterInput = document.getElementById('filterInput');
@@ -12,6 +12,7 @@ class AppView {
 		document.addEventListener(Constants.events.DATA_COLLECTION_UPDATE, () => {
 			this.clearListView();
 			this.render();
+			this.updateScrollPosition();
 		});
 	}
 
@@ -27,11 +28,15 @@ class AppView {
 	}
 
 	render() {
-		for(let i = 0; i < this.listModel.getItemsListLength(); i += 1) {
-			let view = this.createViewFromModel(this.listModel.getItemModelByIndex(i));
+		for(let i = 0; i < this.listModel.getViewCollectionLength(); i += 1) {
+			let view = this.listModel.getItemViewByIndex(i);
 
 			this.filterList.append(view.getElement());
 		}
+	}
+
+	updateScrollPosition() {
+		this.filterList.scrollTo(0,0);
 	}
 
 	createViewFromModel(model) {

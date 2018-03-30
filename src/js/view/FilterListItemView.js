@@ -1,27 +1,41 @@
 
 class FilterListItemView {
 	constructor(elModel) {
-		this.element = document.createElement('li');
-		this.element.id = elModel.getID();
 		this.elementModel = elModel;
 
-		var stateCheckbox = document.createElement('input');
-		var dataLabel = document.createElement('label');
+		this.element = document.createElement('li');
+		this.element.id = elModel.getID();
+		this.element.className = "list_view-item";
 
-		stateCheckbox.className = "item_select-checkbox";
+		this.dataLabel = document.createElement('label');
+		this.checkmark = document.createElement('span');
+
+		let stateCheckboxContainer = document.createElement('label');
+		let stateCheckbox = document.createElement('input');
+		let checkStyle = this.elementModel.getSelectedState() ? "selected" : "";
+
+		stateCheckbox.onchange = () => this.changeSelectedState();
 		stateCheckbox.type = "checkbox";
-		stateCheckbox.checked = this.elementModel.getSelectedState();
-		stateCheckbox.onchange = (e) => this.changeSelectedState(e);
 
-		dataLabel.className = "item_data-label";
-		dataLabel.innerHTML = this.elementModel.getData();
+		this.dataLabel.innerHTML = this.elementModel.getData();
+		this.dataLabel.className = checkStyle + " item_label";
+		this.checkmark.className = checkStyle;
 
-		this.element.appendChild(stateCheckbox);
-		this.element.appendChild(dataLabel);
+		stateCheckboxContainer.appendChild(stateCheckbox);
+		stateCheckboxContainer.appendChild(this.checkmark);
+		stateCheckboxContainer.className = "item_select-checkbox";
+
+		this.element.appendChild(stateCheckboxContainer);
+		this.element.appendChild(this.dataLabel);
 	}
 
-	changeSelectedState(e) {
-		this.elementModel.setSelectedState(e.target.checked);
+	changeSelectedState() {
+		let checked = !this.elementModel.getSelectedState();
+		let checkStyle = checked ? "selected" : "";
+
+		this.dataLabel.className = checkStyle + " item_label";
+		this.checkmark.className = checkStyle;
+		this.elementModel.setSelectedState(checked);
 	}
 
 	getElement() {
