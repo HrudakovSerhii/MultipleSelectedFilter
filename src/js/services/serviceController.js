@@ -26,7 +26,7 @@ class ServiceController {
 	}
 
 	saveDataInFile(data) {
-		let jsonData = JSON.stringify(data);
+		let jsonData = JSON.stringify(data, null, '\t');
 
 		this.download(jsonData, 'default.txt', 'text/plain');
 	}

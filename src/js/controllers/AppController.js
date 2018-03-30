@@ -72,10 +72,14 @@ class AppController {
 	}
 
 	saveFilterScheme() {
+		let regEx = '&amp;';
 		let selectedCollection = this.model.getSelectedViewCollection();
-		let filterScheme = selectedCollection.map(view => view.elementModel.getData());
+		let selectedItemNames = selectedCollection.map(view => {
+			let stringData = view.elementModel.getData();
+			return stringData.replace(regEx, '&');
+		});
 
-		ServiceController.saveDataInFile(filterScheme);
+		ServiceController.saveDataInFile(selectedItemNames);
 	}
 }
 
