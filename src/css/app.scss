@@ -77,6 +77,7 @@
 				.list_view-item {
 					padding: 8px 0;
 					margin: 0;
+					line-height: 17px;
 
 					.item_select-checkbox {
 						display: inline-block;
@@ -84,7 +85,7 @@
 						width: 14px;
 						height: 14px;
 						top: 1px;
-						float: left;
+						vertical-align: middle;
 						border: grey 1px solid;
 
 						input {
@@ -112,6 +113,7 @@
 						background-color: ghostwhite;
 						font-size: 13px;
 						padding-left: 10px;
+						vertical-align: middle;
 
 						&.selected {
 							color: $primery-color;
