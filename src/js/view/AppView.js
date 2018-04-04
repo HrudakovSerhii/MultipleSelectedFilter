@@ -14,6 +14,14 @@ class AppView {
 			this.render();
 			this.updateScrollPosition();
 		});
+
+		document.addEventListener(Constants.events.ITEM_SELECTED, () => {
+			this.enableSaveButton();
+		});
+
+		document.addEventListener(Constants.events.ITEM_UNSELECTED, () => {
+			this.disableSaveButton();
+		});
 	}
 
 	clearListView() {
@@ -33,6 +41,14 @@ class AppView {
 
 			this.filterList.append(view.getElement());
 		}
+	}
+
+	enableSaveButton() {
+		this.saveFiltersSchemeBtn.disabled = false;
+	}
+
+	disableSaveButton() {
+		this.saveFiltersSchemeBtn.disabled = true;
 	}
 
 	updateScrollPosition() {

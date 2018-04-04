@@ -1,15 +1,20 @@
 
 class FilterListItemModel {
-	constructor(id) {
+	constructor(id, parent) {
 		this.modelData = '';
 		this.selected = false;
 		this.id = 'filterListItem' + id;
+		this.parent = parent;
 	}
 
 	setSelectedState(state) {
-		if (this.selected !== state) {
-			this.selected = state;
+		if (state) {
+			this.parent.itemSelected(this.id);
+		} else {
+			this.parent.itemUnselected(this.id);
 		}
+
+		this.selected = state;
 	}
 
 	getSelectedState() {

@@ -79,7 +79,9 @@ class AppController {
 			return stringData.replace(regEx, '&');
 		});
 
-		ServiceController.saveDataInFile(selectedItemNames);
+		if (selectedItemNames.length) {
+			ServiceController.saveDataInFile(selectedItemNames);
+		}
 	}
 }
 

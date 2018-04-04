@@ -5,5 +5,7 @@ export default {
 	},
 	events: {
 		DATA_COLLECTION_UPDATE: 'dataCollectionUpdate',
+		ITEM_SELECTED: 'itemSelected',
+		ITEM_UNSELECTED: 'itemUnselected'
  	}
 }

@@ -5,8 +5,11 @@ class AppModel {
 	constructor() {
 		this.viewCollection = [];
 		this.filteredViewCollection = [];
+		this.selectedItemCollection = [];
 
 		this.collectionUpdated = new Event(Constants.events.DATA_COLLECTION_UPDATE);
+		this.itemSelectedEvent = new Event(Constants.events.ITEM_SELECTED);
+		this.itemUnselectedEvent = new Event(Constants.events.ITEM_UNSELECTED);
 	}
 
 	setViewCollection(viewCollection) {
@@ -36,11 +39,31 @@ class AppModel {
 	}
 
 	initItemModel(data, index) {
-		let model = new FilterListItemModel(index);
+		let model = new FilterListItemModel(index, this);
 		
 		model.setData(data);
 
 		return model;
+	}
+
+	itemSelected(id) {
+		if (!this.selectedItemCollection.length) {
+			document.dispatchEvent(this.itemSelectedEvent);
+		}
+
+		this.selectedItemCollection.push(id);
+	}
+
+	itemUnselected(id) {
+		let index = this.selectedItemCollection.indexOf(id);
+
+		if (index > -1) {
+			this.selectedItemCollection.splice(index, 1);
+
+			if (!this.selectedItemCollection.length) {
+				document.dispatchEvent(this.itemUnselectedEvent);
+			}
+		}
 	}
 
 	checkIfModelInCollection(newModel, modelCollection) {
